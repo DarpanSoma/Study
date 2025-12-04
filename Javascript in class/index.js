@@ -1,7 +1,6 @@
 // Alert the websit
 // alert("Hello World")
 
-
 // Local storage
 
 // calling the local storage to get the item called "username"
@@ -9,7 +8,6 @@
 
 // alert the user with username
 // alert(username)
-
 
 // ask the user for the username
 // username = prompt("Enter Name: ")
@@ -19,49 +17,67 @@
 
 
 
-let savefile = {
-    "health": 100,
-    "energy": 50
-};
 
-let health = document.getElementById("health");
-let energy = document.getElementById("energy");
-
-
-// document.getElementById("health").innerHTML`Health: ${energy}`;
-
-function saveGame(){
-localStorage.setItem("save_game", JSON.stringify(savefile));
-
-
-
+// save the game
+function saveGame() {
+    localStorage.setItem("save_game", JSON.stringify(savefile));
 }
-
-
+// remove health and energy
 function gameloop() {
-    console.log("game loop is running")
-    console.log("save data is: ", savefile) 
-
-
+    console.log("game loop is running");
+    console.log("save data is: ", savefile);
     
-    if(savefile.energy > 0){
-        savefile.energy -= 1;
-    }else if (savefile.energy == 0 && savefile.health > 0){
-        setInterval(2000) {
-        savefile.health -= 1;
-        };  
+    if (savefile.energy > 0) {
+    savefile.energy -= 1;
+  } else if (savefile.energy == 0 && savefile.health > 0) {
+    savefile.health -= 1;
+  }
 
-    }
-    
-    if(savefile.health == 0){
-        clearInterval(gameloopinterval)
-        console.log("Your are out of engery and health")
-    }
+  if (savefile.health == 0) {
+    clearInterval(gameloopinterval);
+    console.log("Your are out of engery and health");
+  }
 
-    saveGame();
+  document.getElementById(
+    "health"
+  ).innerHTML = `<h1>Health: ${savefile.health}</h1>`;
+  document.getElementById(
+    "energy"
+  ).innerHTML = `<h1>Enegry: ${savefile.energy}</h1>`;
+
+  saveGame();
 }
 
-  
-let gameloopinterval = setInterval(gameloop, 100)
+// Game start here
+let savefile = JSON.parse(localStorage.getItem("save_game"));
+if (!savefile) {
+  savefile = {
+    clicks: 0,
+    health: 100,
+    energy: 50,
+  };
+}
+
+// run the gameloop every second
+let gameloopinterval = setInterval(gameloop, 1000);
+
+
+//reset the game
+document.getElementById("reset").addEventListener("click", function () {
+  console.log("reset");
+  localStorage.removeItem("save_game");
+  savefile = {
+    clicks: 0,
+    health: 100,
+    energy: 50,
+  };
+  refreshpage();
+});
+
+//refresh the game
+function refreshpage() {
+    window.location.reload();
+}
+
 
 

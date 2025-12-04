@@ -1,0 +1,12 @@
+.prb {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+}
+
+#reset {
+  width: 100px;
+  height: 50px;
+}
